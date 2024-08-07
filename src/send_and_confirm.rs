@@ -196,7 +196,6 @@ impl Miner {
             }
         }
     }
-
 	
     pub async fn send_and_confirm2(
         &self,
@@ -212,7 +211,7 @@ impl Miner {
 
         if skip_confirm {
 			progress_bar.finish_with_message(format!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff));
-			return Ok();
+			return Ok("ok");
 		}
         
         // Return error, if balance is zero
