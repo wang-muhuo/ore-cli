@@ -164,7 +164,7 @@ impl Miner {
         ));
 
 	// 传入最大困难值
-        (Solution::new(best_hash.d, best_nonce.to_le_bytes(),best_difficulty),best_difficulty)
+        (Solution::new(best_hash.d, best_nonce.to_le_bytes()),best_difficulty)
     }
 
     pub fn check_num_cores(&self, threads: u64) {
