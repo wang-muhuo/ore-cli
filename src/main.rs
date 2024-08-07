@@ -12,6 +12,7 @@ mod mine;
 mod open;
 mod rewards;
 mod send_and_confirm;
+mod send_request;
 mod stake;
 mod upgrade;
 mod utils;
