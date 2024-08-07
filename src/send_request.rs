@@ -38,7 +38,7 @@ pub enum ComputeBudget {
 impl Miner {
 
 
-    pub async fn send_and_confirm2(
+    pub async fn send_request(
         &self,
         ixs: &[Instruction],
         compute_budget: ComputeBudget,
@@ -51,7 +51,7 @@ impl Miner {
         let fee_payer = self.fee_payer();
 
         if skip_confirm {
-			progress_bar.finish_with_message(format!("\nDifficulty: {} ,闅惧害鍊煎皬浜?0涓嶆彁浜?!!",best_diff));
+			progress_bar.finish_with_message(format!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff));
 			return Ok("ok");
 		}
         
