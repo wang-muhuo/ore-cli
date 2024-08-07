@@ -51,12 +51,7 @@ impl Miner {
         let fee_payer = self.fee_payer();
 
 
-               if best_diff.lt(&20) {
-			    return Err(ClientError {
-		                    request: None,
-		                    kind: ClientErrorKind::Custom("难度值小于20不提交!!!".into()),
-		        	});
-                    }
+        
 	    
         // Return error, if balance is zero
         if let Ok(balance) = client.get_balance(&fee_payer.pubkey()).await {
