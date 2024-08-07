@@ -70,7 +70,7 @@ impl Miner {
 	    ));
 		
 		self.send_request(&ixs, ComputeBudget::Fixed(compute_budget), false,best_diff)
-		.await;
+		.await.ok();
 
 	
 
