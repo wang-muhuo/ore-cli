@@ -121,6 +121,15 @@ impl Miner {
                         return Ok(sig);
                     }
 		}
+
+		// Handle confirmation errors
+	    Err(err) => {
+		progress_bar.set_message(format!(
+		    "{}: {}",
+		    "ERROR".bold().red(),
+		    err.kind().to_string()
+		));
+	    }
 	    }
 	}
 	    
