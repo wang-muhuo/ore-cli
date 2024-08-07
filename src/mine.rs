@@ -16,7 +16,7 @@ use solana_sdk::signer::Signer;
 
 use crate::{
     args::MineArgs,
-    send_and_confirm2::ComputeBudget,
+    send_request::ComputeBudget,
     utils::{amount_u64_to_string, get_clock, get_config, get_proof_with_authority, proof_pubkey},
     Miner,
 };
@@ -69,7 +69,7 @@ impl Miner {
 		solution,
 	    ));
 		
-		self.send_and_confirm2(&ixs, ComputeBudget::Fixed(compute_budget), false,best_diff)
+		self.send_request(&ixs, ComputeBudget::Fixed(compute_budget), false,best_diff)
 		.await
 		.ok();
 
