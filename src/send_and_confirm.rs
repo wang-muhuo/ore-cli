@@ -50,7 +50,7 @@ impl Miner {
 
         if skip_confirm {
 			progress_bar.finish_with_message(format!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff));
-			return Ok(sig);
+			return Ok();
 		}
         
         // Return error, if balance is zero
