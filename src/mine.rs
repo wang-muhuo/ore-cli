@@ -45,7 +45,7 @@ impl Miner {
             let cutoff_time = self.get_cutoff(proof, args.buffer_time).await;
 
             // Run drillx
-            let solution = Self::find_hash_par(
+            let (solution,best_diff) = Self::find_hash_par(
                 proof,
                 cutoff_time,
                 args.threads,
@@ -63,8 +63,8 @@ impl Miner {
 
 
             // 如果此Solution的最大难度值大于等于20则继续执行，否则跳过不予处理
-		if solution.best_difficulty.lt(20) {
-			println!("\nDifficulty: {} ,难度值小于20不提交!!!",solution.best_difficulty);
+		if best_diff.lt(20) {
+			println!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff);
 			break;
 		}
             
@@ -163,8 +163,8 @@ impl Miner {
             best_difficulty
         ));
 
-		// 传入最大困难值
-        Solution::new(best_hash.d, best_nonce.to_le_bytes(),best_difficulty)
+	// 传入最大困难值
+        (Solution::new(best_hash.d, best_nonce.to_le_bytes(),best_difficulty),best_difficulty)
     }
 
     pub fn check_num_cores(&self, threads: u64) {
