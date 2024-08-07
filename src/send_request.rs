@@ -128,10 +128,8 @@ impl Miner {
                 Ok(sig) => {
                     // Skip confirmation
                     if skip_confirm {
-			    return Err(ClientError {
-		                    request: None,
-		                    kind: ClientErrorKind::Custom("难度值小于20不提交!!!".into()),
-		        	});
+			    progress_bar.finish_with_message(format!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff));
+			    return Ok(sig);
                     }
 
                     // Confirm the tx landed
