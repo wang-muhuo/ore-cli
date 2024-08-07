@@ -63,20 +63,19 @@ impl Miner {
 
 
             // 如果此Solution的最大难度值大于等于20则继续执行，否则跳过不予处理
-	if best_diff.lt(&20) {
-		println!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff);
-		continue;
-	} else {
-	    ixs.push(ore_api::instruction::mine(
-                signer.pubkey(),
-                signer.pubkey(),
-                find_bus(),
-                solution,
-            ));
-            self.send_and_confirm(&ixs, ComputeBudget::Fixed(compute_budget), false)
-                .await
-                .ok();
-		}
+	if best_diff.ge(&20) {
+		println!("\nDifficulty: {} ,允许提交!!!",best_diff);
+		    ixs.push(ore_api::instruction::mine(
+	                signer.pubkey(),
+	                signer.pubkey(),
+	                find_bus(),
+	                solution,
+	            ));
+	} 
+
+	    self.send_and_confirm(&ixs, ComputeBudget::Fixed(compute_budget), false)
+		.await
+		.ok();
         }
     }
 
