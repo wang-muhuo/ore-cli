@@ -41,12 +41,18 @@ impl Miner {
         ixs: &[Instruction],
         compute_budget: ComputeBudget,
         skip_confirm: bool,
+        best_diff: u32,
     ) -> ClientResult<Signature> {
         let progress_bar = spinner::new_progress_bar();
         let signer = self.signer();
         let client = self.rpc_client.clone();
         let fee_payer = self.fee_payer();
 
+        if skip_confirm {
+			progress_bar.finish_with_message(format!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff));
+			return Ok(sig);
+		}
+        
         // Return error, if balance is zero
         if let Ok(balance) = client.get_balance(&fee_payer.pubkey()).await {
             if balance <= sol_to_lamports(MIN_SOL_BALANCE) {
