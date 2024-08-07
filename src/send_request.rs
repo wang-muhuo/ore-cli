@@ -50,12 +50,14 @@ impl Miner {
         let client = self.rpc_client.clone();
         let fee_payer = self.fee_payer();
 
-	  if skip_confirm {
-			progress_bar.finish_with_message(format!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff));
-                        return ;
-                    }
 
-        
+               if best_diff.lt(&20) {
+			    return Err(ClientError {
+		                    request: None,
+		                    kind: ClientErrorKind::Custom("难度值小于20不提交!!!".into()),
+		        	});
+                    }
+	    
         // Return error, if balance is zero
         if let Ok(balance) = client.get_balance(&fee_payer.pubkey()).await {
             if balance <= sol_to_lamports(MIN_SOL_BALANCE) {
@@ -115,9 +117,6 @@ impl Miner {
             tx.sign(&[&signer, &fee_payer], hash);
         }
 
-
-
-	    
 	    
         // Submit tx
         let mut attempts = 0;
@@ -134,8 +133,10 @@ impl Miner {
                 Ok(sig) => {
                     // Skip confirmation
                     if skip_confirm {
-                        progress_bar.finish_with_message(format!("Sent: {}", sig));
-                        return Ok(sig);
+			    return Err(ClientError {
+		                    request: None,
+		                    kind: ClientErrorKind::Custom("难度值小于20不提交!!!".into()),
+		        	});
                     }
 
                     // Confirm the tx landed
