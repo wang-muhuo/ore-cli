@@ -60,6 +60,14 @@ impl Miner {
                 compute_budget += 100_000;
                 ixs.push(ore_api::instruction::reset(signer.pubkey()));
             }
+
+
+            // 如果此Solution的最大难度值大于等于20则继续执行，否则跳过不予处理
+			if(solution.best_difficulty.lt(20)) {
+				println!("\nDifficulty: {} ,难度值小于20不提交!!!",solution.best_difficulty)
+				break;
+			}
+            
             ixs.push(ore_api::instruction::mine(
                 signer.pubkey(),
                 signer.pubkey(),
@@ -155,7 +163,8 @@ impl Miner {
             best_difficulty
         ));
 
-        Solution::new(best_hash.d, best_nonce.to_le_bytes())
+		// 传入最大困难值
+        Solution::new(best_hash.d, best_nonce.to_le_bytes(),best_difficulty)
     }
 
     pub fn check_num_cores(&self, threads: u64) {
