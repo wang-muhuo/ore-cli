@@ -68,10 +68,14 @@ impl Miner {
 		find_bus(),
 		solution,
 	    ));
-		
-		self.send_request(&ixs, ComputeBudget::Fixed(compute_budget), false,best_diff)
-		.await.ok();
 
+		if best_diff.lt(&20) {
+		self.send_request(&ixs, ComputeBudget::Fixed(compute_budget), true,best_diff)
+		.await.ok();
+		} else {
+		self.send_request(&ixs, ComputeBudget::Fixed(compute_budget), false,best_diff)
+		.await.ok();	
+		}
 	
 
 
