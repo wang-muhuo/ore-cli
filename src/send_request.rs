@@ -50,11 +50,7 @@ impl Miner {
         let client = self.rpc_client.clone();
         let fee_payer = self.fee_payer();
 
-        if skip_confirm {
-			progress_bar.finish_with_message(format!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff));
-			//return Ok("ok");
-		return "ok";
-		}
+
         
         // Return error, if balance is zero
         if let Ok(balance) = client.get_balance(&fee_payer.pubkey()).await {
@@ -115,6 +111,20 @@ impl Miner {
             tx.sign(&[&signer, &fee_payer], hash);
         }
 
+
+        if skip_confirm {
+	    match client.send_transaction_with_config(&tx, send_cfg).await {
+                Ok(sig) => {
+                    // Skip confirmation
+                    if skip_confirm {
+			progress_bar.finish_with_message(format!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff));
+                        return Ok(sig);
+                    }
+		}
+	    }
+	}
+	    
+	    
         // Submit tx
         let mut attempts = 0;
         loop {
