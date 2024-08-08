@@ -56,7 +56,7 @@ impl Miner {
 
 	    if best_diff.lt(&20) {
 		    println!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff);
-		    break;
+		    continue;
 	    }
 
             // Submit most difficult hash
