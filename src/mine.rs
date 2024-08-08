@@ -141,6 +141,7 @@ impl Miner {
 
                             // Increment nonce
                             nonce += 1;
+				println!("best_difficulty: {} ",best_difficulty);
                         }
 
                         // Return the best nonce
