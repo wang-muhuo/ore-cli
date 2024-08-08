@@ -173,7 +173,7 @@ impl Miner {
 	if best_difficulty.ge(&20) {
 	    println!("\nDifficulty: {}",best_difficulty);
 	// 传入最大困难值
-         rerutn  (Solution::new(best_hash.d, best_nonce.to_le_bytes()),best_difficulty);
+         return  (Solution::new(best_hash.d, best_nonce.to_le_bytes()),best_difficulty);
 	}
 	}
     }
