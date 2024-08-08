@@ -98,10 +98,10 @@ impl Miner {
         let mut tx = Transaction::new_with_payer(&final_ixs, Some(&fee_payer.pubkey()));
 
         // Sign tx
-        let (hash, _slot) = client
-            .get_latest_blockhash_with_commitment(self.rpc_client.commitment())
-            .await
-            .unwrap();
+        // let (hash, _slot) = client
+        //     .get_latest_blockhash_with_commitment(self.rpc_client.commitment())
+        //     .await
+        //     .unwrap();
 
         
         if signer.pubkey() == fee_payer.pubkey() {
