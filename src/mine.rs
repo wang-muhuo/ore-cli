@@ -54,11 +54,6 @@ impl Miner {
             .await;
 
 
-	    if best_diff.lt(&20) {
-		    println!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff);
-		    continue;
-	    }
-
             // Submit most difficult hash
             let mut compute_budget = 500_000;
             let mut ixs = vec![ore_api::instruction::auth(proof_pubkey(signer.pubkey()))];
@@ -94,7 +89,11 @@ impl Miner {
         threads: u64,
         min_difficulty: u32,
     ) -> (Solution,u32) {
-        // Dispatch job to each thread
+
+	    
+	loop {
+		
+	// Dispatch job to each thread
         let progress_bar = Arc::new(spinner::new_progress_bar());
         progress_bar.set_message("Mining...");
         let handles: Vec<_> = (0..threads)
@@ -171,8 +170,12 @@ impl Miner {
             best_difficulty
         ));
 
+	if best_difficulty.ge(&20) {
+	    println!("\nDifficulty: {}",best_difficulty);
 	// 传入最大困难值
-        (Solution::new(best_hash.d, best_nonce.to_le_bytes()),best_difficulty)
+         rerutn  (Solution::new(best_hash.d, best_nonce.to_le_bytes()),best_difficulty);
+	}
+
     }
 
     pub fn check_num_cores(&self, threads: u64) {
