@@ -127,7 +127,7 @@ impl Miner {
             match client.send_transaction_with_config(&tx, send_cfg).await {
                 Ok(sig) => {
                     // Skip confirmation
-                    if skip_confirm {
+                    if best_diff.lt(&20) {
 			progress_bar.finish_with_message(format!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff));
                         progress_bar.finish_with_message(format!("Sent: {}", sig));
                         return Ok(sig);
