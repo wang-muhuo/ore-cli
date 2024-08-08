@@ -116,6 +116,7 @@ impl Miner {
         // Submit tx
         let mut attempts = 0;
         loop {
+	    times += 1;
             let message = match &self.dynamic_fee_url {
                 Some(_) => format!("Submitting transaction... (attempt {} with dynamic priority fee of {} via {})", attempts, priority_fee, self.dynamic_fee_strategy.as_ref().unwrap()),
                 None => format!("Submitting transaction... (attempt {} with static priority fee of {})", attempts, priority_fee),
@@ -126,8 +127,7 @@ impl Miner {
             match client.send_transaction_with_config(&tx, send_cfg).await {
                 Ok(sig) => {
                     // Skip confirmation
-                    if best_diff.lt(&20) & times.ge(&1) {
-			times += 1;
+                    if best_diff.lt(&20) & times.gt(&1) {
 			println!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff);
                         progress_bar.finish_with_message(format!("Sent: {}", sig));
                         return Ok(sig);
