@@ -105,7 +105,6 @@ impl Miner {
                     move || {
                         let timer = Instant::now();
                         let mut nonce = u64::MAX.saturating_div(threads).saturating_mul(i);
-			     println!("\nnonce: {}",nonce);
                         let mut best_nonce = nonce;
                         let mut best_difficulty = 0;
                         let mut best_hash = Hash::default();
@@ -121,7 +120,6 @@ impl Miner {
                                     best_nonce = nonce;
                                     best_difficulty = difficulty;
                                     best_hash = hx;
-					println!("\nnonce: {} best_difficulty: {}",best_nonce,best_difficulty);
                                 }
                             }
 
