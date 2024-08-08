@@ -70,19 +70,17 @@ impl Miner {
 		solution,
 	    ));
 
-		self.send_request(&ixs, ComputeBudget::Fixed(compute_budget), false,best_diff);
+		// self.send_request(&ixs, ComputeBudget::Fixed(compute_budget), false,best_diff);
 
 		
-		// if best_diff.lt(&20) {
-		// self.send_request(&ixs, ComputeBudget::Fixed(compute_budget), true,best_diff)
-		// .await.ok();
-		// } else {
-		// self.send_request(&ixs, ComputeBudget::Fixed(compute_budget), false,best_diff)
-		// .await.ok();	
-		// }
+	   if best_diff.ge(&18) {
+		self.send_request(&ixs, ComputeBudget::Fixed(compute_budget), true,best_diff)
+		.await.ok();
+	    } else {
+		self.send_request(&ixs, ComputeBudget::Fixed(compute_budget), false,best_diff)
+		.await.ok();	
+	     }
 	
-
-
         }
     }
 
@@ -127,7 +125,7 @@ impl Miner {
                             // Exit if time has elapsed
                             if nonce % 100 == 0 {
                                 if timer.elapsed().as_secs().ge(&cutoff_time) {
-                                    if best_difficulty.ge(&17) {
+                                    if best_difficulty.ge(&min_difficulty) {
                                         // Mine until min difficulty has been met
                                         break;
                                     }
@@ -141,7 +139,9 @@ impl Miner {
 
                             // Increment nonce
                             nonce += 1;
-				println!("best_difficulty: {} ",best_difficulty);
+				if best_difficulty.ge(&18) {
+				println!("best_difficulty: {} ",best_difficulty);					
+				}
                         }
 
                         // Return the best nonce
@@ -172,7 +172,7 @@ impl Miner {
             best_difficulty
         ));
 
-	if best_difficulty.ge(&17) {
+	if best_difficulty.ge(&18) {
 	// 传入最大困难值
          return  (Solution::new(best_hash.d, best_nonce.to_le_bytes()),best_difficulty);
 	}
