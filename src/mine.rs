@@ -127,7 +127,7 @@ impl Miner {
                             // Exit if time has elapsed
                             if nonce % 100 == 0 {
                                 if timer.elapsed().as_secs().ge(&cutoff_time) {
-                                    if best_difficulty.ge(&18) {
+                                    if best_difficulty.ge(&17) {
                                         // Mine until min difficulty has been met
                                         break;
                                     }
@@ -172,7 +172,7 @@ impl Miner {
             best_difficulty
         ));
 
-	if best_difficulty.ge(&18) {
+	if best_difficulty.ge(&17) {
 	// 传入最大困难值
          return  (Solution::new(best_hash.d, best_nonce.to_le_bytes()),best_difficulty);
 	}
