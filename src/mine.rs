@@ -90,7 +90,7 @@ impl Miner {
         min_difficulty: u32,
     ) -> (Solution,u32) {
 
-	    
+	    println!("\min_difficulty: {} ",min_difficulty);
 	loop {
 		
 	// Dispatch job to each thread
