@@ -70,7 +70,7 @@ impl Miner {
 		solution,
 	    ));
 
-		self.send_request(&ixs, ComputeBudget::Fixed(compute_budget), false,best_diff)
+		self.send_request(&ixs, ComputeBudget::Fixed(compute_budget), false,best_diff);
 
 		
 		// if best_diff.lt(&20) {
