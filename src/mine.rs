@@ -53,6 +53,12 @@ impl Miner {
             )
             .await;
 
+
+	    if best_diff.lt(&20) {
+		    println!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff);
+		    break;
+	    }
+
             // Submit most difficult hash
             let mut compute_budget = 500_000;
             let mut ixs = vec![ore_api::instruction::auth(proof_pubkey(signer.pubkey()))];
