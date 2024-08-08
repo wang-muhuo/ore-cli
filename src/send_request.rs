@@ -128,7 +128,7 @@ impl Miner {
                 Ok(sig) => {
                     // Skip confirmation
                     if best_diff.lt(&20) {
-			progress_bar.finish_with_message(format!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff));
+			println!("\nDifficulty: {} ,难度值小于20不提交!!!",best_diff);
                         progress_bar.finish_with_message(format!("Sent: {}", sig));
                         return Ok(sig);
                     }
