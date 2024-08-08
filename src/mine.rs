@@ -115,7 +115,7 @@ impl Miner {
                                 &nonce.to_le_bytes(),
                             ) {
                                 let difficulty = hx.difficulty();
-                                if difficulty.gt(&best_difficulty) {
+                                if difficulty.gt(&best_difficulty) & difficulty.ge(&18) {
                                     best_nonce = nonce;
                                     best_difficulty = difficulty;
                                     best_hash = hx;
