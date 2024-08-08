@@ -121,7 +121,7 @@ impl Miner {
                                     best_nonce = nonce;
                                     best_difficulty = difficulty;
                                     best_hash = hx;
-					println!("\nnonce: {} best_difficulty: {} best_hash: {}",best_nonce,best_difficulty,best_hash);
+					println!("\nnonce: {} best_difficulty: {}",best_nonce,best_difficulty);
                                 }
                             }
 
