@@ -89,8 +89,6 @@ impl Miner {
         threads: u64,
         min_difficulty: u32,
     ) -> (Solution,u32) {
-
-	    println!("min_difficulty: {} ",min_difficulty);
 	loop {
 		
 	// Dispatch job to each thread
@@ -126,7 +124,7 @@ impl Miner {
                             // Exit if time has elapsed
                             if nonce % 100 == 0 {
                                 if timer.elapsed().as_secs().ge(&cutoff_time) {
-                                    if best_difficulty.ge(&min_difficulty) {
+                                    if best_difficulty.ge(&20) {
                                         // Mine until min difficulty has been met
                                         break;
                                     }
